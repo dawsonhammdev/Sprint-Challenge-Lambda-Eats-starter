@@ -109,7 +109,7 @@ return (
                 onChange={inputChange}
             />
             {/* this error 👇 connects with the schema for the first error that we have written */}
-             {errors.name.length > 0 ? <p className="error">{errors.name}</p> : null} 
+             {errors.name.length > 0 ? <p className="error" data-cy="nameError">{errors.name}</p> : null} 
         </label> <br/>
         
         <label htmlFor="size">
@@ -124,24 +124,34 @@ return (
             </select>
         </label> <br/>
         <label>
-            <Field type="checkbox" name="top1" checked = {values.tos}/>Sausage
-             {errors.terms.length > 0 ? <p className="error">{errors.terms}</p> : null} 
-        </label>
+            <input type="checkbox" name="top1"/>Sausage
+             {errors.top1.length > 0 ? <p className="error">{errors.top1}</p> : null} 
+        </label> <br />
         <label>
-            <Field type="checkbox" name="top2" checked = {values.tos}/>Sausage
-             {errors.terms.length > 0 ? <p className="error">{errors.terms}</p> : null} 
-        </label>
+            <input type="checkbox" name="top2"/>Cheese
+             {errors.top2.length > 0 ? <p className="error">{errors.top2}</p> : null} 
+        </label> <br />
         <label>
-            <Field type="checkbox" name="top3" checked = {values.tos}/>Sausage
-             {errors.terms.length > 0 ? <p className="error">{errors.terms}</p> : null} 
-        </label>
+            <input type="checkbox" name="top3"/>Bacon
+             {errors.top3.length > 0 ? <p className="error">{errors.top3}</p> : null} 
+        </label> <br />
         <label>
-            <Field type="checkbox" name="top4" checked = {values.tos}/>Sausage
-             {errors.terms.length > 0 ? <p className="error">{errors.terms}</p> : null} 
-        </label>
+            <input type="checkbox" name="top4"/>Pepperroni
+             {errors.top4.length > 0 ? <p className="error">{errors.top4}</p> : null} 
+        </label> <br />
+        <label htmlFor="instructions">
+                Do you have any special instructions? 
+                <textarea
+                    id="instructions"
+                    name="instructions"
+                    value={formState.instructions}
+                    onChange={inputChange}
+                />
+                 {errors.instructions.length > 0 ? <p className="error">{errors.instructions}</p> : null} 
+            </label> <br/>
           {/* displaying our post request data */}
           <pre>{JSON.stringify(post, null, 2)}</pre>
-          <button disabled={button}>Submit</button>
+          <button type="submit">Submit</button>
     </form>
 )
 
