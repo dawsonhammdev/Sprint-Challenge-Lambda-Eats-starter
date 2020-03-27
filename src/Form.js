@@ -6,11 +6,11 @@ import {Link} from "react-router-dom"
 const formSchema = yup.object().shape({
     name: yup.string().required("please input a name").min(2, "name must be more than 2 characters"),
     size: yup.string().required("Please a size for your pizza"),
-    top1: yup.boolean().oneOf([true || false], "please choose a topping"),
-    top2: yup.boolean().oneOf([true || false], "please choose a topping"),
-    top3: yup.boolean().oneOf([true || false], "please choose a topping"),
-    top4: yup.boolean().oneOf([true || false], "please choose a topping"),
-    instructions: yup.string().required("LEt us know if there are any special instructions")
+    // top1: yup.boolean(),
+    // top2: yup.boolean(),
+    // top3: yup.boolean(),
+    // top4: yup.boolean(),
+    instructions: yup.string().required("Let us know if there are any special instructions")
 });
 
 export default function Form() {
@@ -49,7 +49,7 @@ export default function Form() {
     const formSubmit = e => {
         e.preventDefault();
         axios
-            .post("https://reqres.in/api/pizza-orders", formState)
+            .post("https://reqres.in/api/users", formState)
             .then(res => {
                 setPost(res.data); 
                 setFormState({
@@ -68,7 +68,7 @@ export default function Form() {
 const validateChange = e => {
     yup 
         .reach(formSchema, e.target.name)
-        .validate(e.target.name === "terms" ? e.target.checked : e.target.value)
+        .validate(e.target.value)
         .then(valid => {
             setErrors({
                 ...errors,
@@ -90,6 +90,16 @@ const inputChange = e => {
         e.target.type  === "checkbox" ? e.target.checked : e.target.value
     };
     validateChange(e);
+    setFormState(newFormData);
+};
+
+const checkBoxChange = e => {
+    e.persist();
+    const newFormData = {
+        ...formState,
+        [e.target.name]:
+        e.target.type  === "checkbox" ? e.target.checked : e.target.value
+    };
     setFormState(newFormData);
 };
 
@@ -124,19 +134,19 @@ return (
             </select>
         </label> <br/>
         <label>
-            <input type="checkbox" name="top1"/>Sausage
+            <input type="checkbox" name="top1" value="top1" onChange={checkBoxChange} />Sausage
              {errors.top1.length > 0 ? <p className="error">{errors.top1}</p> : null} 
         </label> <br />
         <label>
-            <input type="checkbox" name="top2"/>Cheese
+            <input type="checkbox" name="top2" onChange={checkBoxChange}  />Cheese
              {errors.top2.length > 0 ? <p className="error">{errors.top2}</p> : null} 
         </label> <br />
         <label>
-            <input type="checkbox" name="top3"/>Bacon
+            <input type="checkbox" name="top3" onChange={checkBoxChange}  />Bacon
              {errors.top3.length > 0 ? <p className="error">{errors.top3}</p> : null} 
         </label> <br />
         <label>
-            <input type="checkbox" name="top4"/>Pepperroni
+            <input type="checkbox" name="top4" onChange={checkBoxChange} />Pepperroni
              {errors.top4.length > 0 ? <p className="error">{errors.top4}</p> : null} 
         </label> <br />
         <label htmlFor="instructions">
@@ -156,3 +166,4 @@ return (
 )
 
 }
+
